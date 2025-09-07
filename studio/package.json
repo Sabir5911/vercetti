@@ -2,10 +2,10 @@
   "name": "vercetti",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+   "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "start": "sanity start"
   },
   "dependencies": {
     "@next/font": "^14.2.15",
