@@ -11,54 +11,107 @@ import {
 } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
+import { getFeaturePost,getPostBySlug } from "../queries"
+import Link from "next/link"
+import { BlogContext } from "@/context/blogContext"
+import useBlog from "../hooks/useBlog"
 
-export function HeroCard() {
+const HeroCard=()=> {
+  
+  const {blogs}=useBlog();
+
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
+  const [posts, setPosts] = React.useState<any[]>([])
+const [Post,setPost]=React.useState()
+
+
+
+
+React.useEffect(()=>{
+  let res=blogs.find((post)=>post.slug.current===posts[current-1]?.post)
+  setPost(res)
+},[blogs, current, posts])
 
   React.useEffect(() => {
-    if (!api) return
+    getFeaturePost(1)
+      .then((data) => setPosts(data))
+      .catch(console.log)
+      
 
+  }, [])
+
+
+  // Update carousel state
+  React.useEffect(() => {
+    if (!api) return
     setCount(api.scrollSnapList().length)
     setCurrent(api.selectedScrollSnap() + 1)
 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+    const onSelect = () => setCurrent(api.selectedScrollSnap() + 1)
+    api.on("select", onSelect)
+
+    return () => {
+      api.off("select", onSelect)
+    }
+  }, [api, posts])
 
   return (
     <div className="mx-auto max-w-full mt-10">
       <Carousel setApi={setApi} className="w-full max-w-full">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {posts.map((post, index) => (
             <CarouselItem key={index}>
-              <Card >
-                <CardContent className="relative h-96 w-full">
-                  <Image
-                    src="/images/image.webp"
-                    alt={`Hero Image ${index + 1}`}
-                    fill
-                    className="object-cover rounded-lg"
-                    priority
-                  />
+           <Link
+           href={`/${post.post}`}
+           >
+              <Card>
+                <CardContent className="w-[700px] h-[450px] " >
+                  {post.media && post.media[0]?._type === "image" ? (
+                    <Image
+                      src={post.media[0].asset.url}
+                      alt={post.post || `Hero Image ${index + 1}`}
+                      priority
+                   fill
+                    />
+                  ) : post.media && post.media[0]?._type === "file" ? (
+                    <video
+                      src={post.media[0].asset.url}
+                      controls
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <Image
+                      src="/images/image.webp"
+                      alt={`Hero Image ${index + 1}`}
+                      fill
+                      className="object-cover rounded-lg"
+                      priority
+                    />
+                  )}
 
-                  {/* Dark gradient overlay for readability */}
+                  {/* Dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-lg" />
 
-                  {/* Red glowing text */}
-                  <h2 className="absolute bottom-4 left-4 right-4 text-white text-2xl font-bold ">
-                    Solo Leveling Anime Gets $1.45M Netmarble Investment for Season 3
+                  {/* Title */}
+                  <h2 className="absolute bottom-1 left-4 right-4 text-white text-2xl font-bold p-6">
+                    {Post?.title || "Default Hero Title"}
                   </h2>
                 </CardContent>
               </Card>
+           </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+
+  
     </div>
   )
 }
+
+
+export default React.memo(HeroCard)

@@ -211,3 +211,18 @@ export async function getSpecificCategoryPosts(category: string) {
     { category }
   );
 }
+
+
+export async function getFeaturePost(limit:number){
+
+   const query = `*[_type == "feature"]{
+    post,
+    media[]{
+      _type,
+      asset->{
+        url
+      }
+    }
+  }`
+  return client.fetch(query,{limit})
+}

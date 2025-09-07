@@ -57,7 +57,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // 🚀 Replace sections with rich text
+
     defineField({
       name: "content",
       title: "Content",

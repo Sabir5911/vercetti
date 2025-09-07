@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { memo } from 'react';
 
 type SmallCardProps = {
   slug: { current: string };
@@ -12,9 +13,7 @@ type SmallCardProps = {
   imageAlt?: string;
 };
 
-export default function SmallCard({
-  slug, title, discrption, category, date, imageUrl, imageAlt
-}: SmallCardProps) {
+const SmallCard=({  slug, title, discrption, category, date, imageUrl, imageAlt}:SmallCardProps)=>{
   return (
     <article className="group overflow-hidden rounded-lg bg-neutral-900 ring-1 ring-neutral-800 hover:ring-neutral-700 transition">
       <Link href={`/${slug?.current ?? ''}`} className="block">
@@ -50,3 +49,5 @@ export default function SmallCard({
     </article>
   );
 }
+
+export default memo(SmallCard)

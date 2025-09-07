@@ -3,6 +3,6 @@ import { createClient } from "next-sanity";
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: '2025-08-11', // today's date for latest API version
+  apiVersion: '2025-08-11',
   useCdn: true,
 });

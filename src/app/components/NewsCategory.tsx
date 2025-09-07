@@ -8,7 +8,7 @@ export default function NewsCategory() {
     const [category, setCategory] = React.useState([])
 
     React.useEffect(() => {
-     let res= getSpecificCategoryPosts("news").then((data)=>setCategory(data)).catch((err)=>console.log(err));
+     let res= getSpecificCategoryPosts("animie").then((data)=>setCategory(data)).catch((err)=>console.log(err));
     }, []);
 
     console.log("category",category)

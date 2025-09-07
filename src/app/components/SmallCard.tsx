@@ -9,7 +9,7 @@ interface SmallCardProps {
 
 export default function SmallCard({ title, img, href }: SmallCardProps) {
   return (
-    <Link href={href} className="block w-[300px] h-56 no-underline">
+    <Link href={href} className="block w-[320px] h-56 no-underline">
       <article className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col">
         {/* Image Section */}
         <div className="relative w-full h-40">
@@ -25,7 +25,7 @@ export default function SmallCard({ title, img, href }: SmallCardProps) {
         {/* Content */}
         <div className="p-4">
           <h3 className="text-gray-900 text-sm font-normal ">
-            {title}
+          {title.length > 180 ? title.slice(0, 180) + "..." : title}
           </h3>
         </div>
       </article>
