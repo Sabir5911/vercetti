@@ -17,14 +17,14 @@ export default defineConfig({
   basePath: '/studio',
 
   // 🔥 Hardcoded values (no env vars required)
-  projectId: 'jm0fd75g',
-  dataset: 'production',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'jm0fd75g',
+  dataset: process.env.SANITY_STUDIO_DATASET || 'production',
+  apiVersion: process.env.SANITY_STUDIO_API_VERSION || '2024-06-07',
   schema,
 
   plugins: [
     structureTool({ structure }),
     visionTool({
-      // API version (choose one from https://www.sanity.io/docs/api-versioning)
       defaultApiVersion: '2023-10-01',
     }),
   ],
