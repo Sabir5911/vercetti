@@ -1,51 +1,59 @@
 
-import React from 'react'
-import { client } from '@/sanity/lib/client'
- 
+import { HeroCard } from "./components/HeroCard";
+import LatestNew from "./components/LatestNew";
+import NewsCategory from "./components/NewsCategory";
+import { Khand } from "next/font/google";
 
-export default async function Page() {
-  const query = `*[_type == "product"]{
-    _id,
-    id,
-    name,
-    slug,
-    description,
-    price,
-    images[]{
-      asset->{
-        _id,
-        url
-      }
-    },
-    category,
-    inStock
-  }`
+const khand = Khand({
+  weight: ['400', '700'], // you can choose available weights
+  subsets: ['latin'],     // subset you need
+   display: "swap",
+});
 
-  const products = await client.fetch(query)
 
+
+
+
+export default function Home() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
-      {products.map((product: any) => (
-        <div key={product._id} className="border-none  rounded shadow-lg shadow-black p-2 flex flex-col">
-          {product.images?.[0]?.asset?.url && (
-            <img
-              src={product.images[0].asset.url}
-              alt={product.name}
-              className="h-96 w-full object-cover rounded  mb-4 "
+    <main className="bg-white min-h-screen text-black">
+      <div className="container mx-auto px-4 py-8">
+        {/* Top Section */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Left: Hero */}
+          <div className="lg:col-span-2">
+
+                <h2 className={`${khand.className} text-3xl md:text-6xl font-semibold`}>{
+                  "Spotlight "
+                  }</h2>
+
+            <HeroCard
+            
             />
-          )}
-          <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
-          <p className="text-sm text-gray-600 flex-grow">{product.description.slice(0, 100)}...</p>
-          <div className="mt-4 flex justify-between items-center">
-            <span className="font-bold text-indigo-600">${product.price.toFixed(2)}</span>
-            {product.inStock ? (
-              <span className="text-green-600 font-semibold">In Stock</span>
-            ) : (
-              <span className="text-red-600 font-semibold">Out of Stock</span>
-            )}
+          </div>
+
+          {/* Right: Latest */}
+          <div className="bg-white rounded-lg p-4 space-y-4">
+               <h2 className={`${khand.className} text-xl md:text-2xl font-semibold`}>{
+                  "Latest"
+                  }</h2>
+
+            <LatestNew />
+            
           </div>
         </div>
-      ))}
-    </div>
-  )
+
+        {/* Bottom Grid */}
+        <div className="mt-20 p-4" >
+          <h2 className={`${khand.className} text-xl md:text-2xl font-semibold`}>{
+                  "Trending News"
+                  }</h2>
+          <div>
+          <NewsCategory />
+
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }

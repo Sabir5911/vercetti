@@ -1,2 +1,3 @@
+import post from './post'
 
-export const schemaTypes = [productType]
+export const schemaTypes = [post]
