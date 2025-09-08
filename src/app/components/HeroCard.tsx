@@ -81,22 +81,19 @@ function MediaSlide({ p, title,current }: { p: Post; title: string ,current:numb
   const videoId = getYouTubeId(p.media![0]?.videoUrl);
 
 
-
-  if (isVideo) {
-    return (
-      <div className="relative w-full h-full">
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          className="w-full h-full object-cover"
-
-
-        />
-
-    
-    
-      </div>
-    )
-  }
+if (isVideo) {
+  return (
+    <div className="relative w-full h-[66vw] md:h-full md:h-full" >
+      <iframe
+      
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`}
+        className="w-full h-full object-cover"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autoplay"
+        allowFullScreen
+      />
+    </div>
+  );
+}
 
   // Fallback
   return (

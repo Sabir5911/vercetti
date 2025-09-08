@@ -104,7 +104,7 @@ export default function RootLayout({
           <SpeedInsights />
         {children}
         </BlogProvider>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
