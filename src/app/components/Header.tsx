@@ -193,7 +193,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200">
+        <div className="lg:hidden bg-white border-t border-gray-200 w-full">
           <div className="px-4 py-3 space-y-2">
 
          

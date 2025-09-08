@@ -14,7 +14,7 @@ const khand = Khand({
 export default function Home() {
   return (
     <main className="bg-white min-h-screen text-black">
-      <div className="container mx-auto px-4 py-8">
+      <div className=" mx-auto px-4 py-8">
         {/* Top Section */}
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left: Hero */}
@@ -28,7 +28,7 @@ export default function Home() {
           </div>
 
           {/* Right: Latest */}
-          <div className="bg-white rounded-lg p-4 space-y-4">
+          <div className="bg-white rounded-lg  space-y-4">
             <h2 className={`${khand.className} text-xl md:text-2xl font-semibold`}>{
               "Latest"
             }</h2>
@@ -39,7 +39,7 @@ export default function Home() {
         </div>
 
         {/* Bottom Grid */}
-        <div className="mt-20 p-4" >
+        <div className="mt-20 " >
           <h2 className={`${khand.className} text-xl md:text-2xl font-semibold`}>{
             "Trending "
           }</h2>

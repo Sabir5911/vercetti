@@ -11,10 +11,9 @@ export default function NewsCategory() {
      let res= getSpecificCategoryPosts("animie").then((data)=>setCategory(data)).catch((err)=>console.log(err));
     }, []);
 
-    console.log("category",category)
     
   return  <>
-<div className='flex justify-start items-start flex-wrap gap-4 '>
+<div className='flex justify-start items-start flex-wrap gap-10 '>
     
         {
             category.map((post)=>(

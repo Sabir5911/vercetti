@@ -1,34 +1,34 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card"; // ShadCN components
 
 interface SmallCardProps {
-  title: string
-  img: string
-  href: string
+  title: string;
+  img: string;
+  href: string;
 }
 
 export default function SmallCard({ title, img, href }: SmallCardProps) {
   return (
-    <Link href={href} className="block w-[320px] h-56 no-underline">
-      <article className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex flex-col">
+    <Link href={href} className="no-underline">
+      <Card className="hover:shadow-lg transition-shadow flex flex-col">
         {/* Image Section */}
-        <div className="relative w-full h-40">
+        <div className="relative w-full h-[220px] md:h-[320px] rounded-t-lg overflow-hidden">
           <Image
             src={img}
             alt={title}
+            className="object-cover w-full h-full"
             fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 400px"
           />
         </div>
 
         {/* Content */}
-        <div className="p-4">
-          <h3 className="text-gray-900 text-sm font-normal ">
-          {title.length > 180 ? title.slice(0, 180) + "..." : title}
+        <CardContent className="p-4">
+          <h3 className="text-gray-900 text-sm font-normal max-w-[280px]">
+            {title.length > 180 ? title.slice(0, 180) + "..." : title}
           </h3>
-        </div>
-      </article>
+        </CardContent>
+      </Card>
     </Link>
-  )
+  );
 }

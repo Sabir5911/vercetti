@@ -57,6 +57,9 @@ React.useEffect(()=>{
     }
   }, [api, posts])
 
+            // <Image src={coverimage.src} alt={title} className="card-img-top object-cover w-[300px] h-[300px]" priority  width={300} height={199}/>
+  
+
   return (
     <div className="mx-auto max-w-full mt-10">
       <Carousel setApi={setApi} className="w-full max-w-full">
@@ -67,9 +70,10 @@ React.useEffect(()=>{
            href={`/${post.post}`}
            >
               <Card>
-                <CardContent className="w-[700px] h-[450px] " >
+                <CardContent className="w-[300px] h-[300px]  md:w-[700px] md:h-[590px]" >
                   {post.media && post.media[0]?._type === "image" ? (
                     <Image
+                    className="object-fill"
                       src={post.media[0].asset.url}
                       alt={post.post || `Hero Image ${index + 1}`}
                       priority
@@ -95,7 +99,7 @@ React.useEffect(()=>{
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-lg" />
 
                   {/* Title */}
-                  <h2 className="absolute bottom-1 left-4 right-4 text-white text-2xl font-bold p-6">
+                  <h2 className="absolute bottom-1 left-4 right-4 text-white text-sm lg:text-2xl font-bold p-4">
                     {Post?.title || "Default Hero Title"}
                   </h2>
                 </CardContent>
@@ -104,8 +108,8 @@ React.useEffect(()=>{
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselNext  className="hidden md:flex" />
       </Carousel>
 
   
