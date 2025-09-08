@@ -66,14 +66,25 @@ export async function generateMetadata(
     title,
     description,
     alternates: { canonical },
-    robots: { index: true, follow: true },
+    
+    
+    robots: { index: true, follow: true ,      "max-image-preview": "large",},
     openGraph: {
       type: 'article',
       url: canonical,
       title,
       description,
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+       images: [
+        {
+          url: post.coverimage?.src?.asset?.url || "" , // ✅ Correct placement
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
+  
     twitter: {
       card: 'summary_large_image',
       title,

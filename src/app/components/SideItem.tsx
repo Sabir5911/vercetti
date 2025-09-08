@@ -24,7 +24,7 @@ export default function SideItem({ time, title, img, href }: SideItemProps) {
 
       {/* Text content */}
       <div className="flex flex-col justify-center">
-        <span className="text-xs lg:text-lg text-gray-500">{time}</span>
+        <span className="text-xs lg:text-sm text-gray-500">{time}</span>
         <p className="text-sm font-semibold leading-snug text-black ">
           {title.length > 60 ? title.slice(0, 60) + "..." : title}
         </p>

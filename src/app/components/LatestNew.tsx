@@ -23,7 +23,7 @@ export default function LatestNew() {
   const { recentPost } = useRecentPost()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4  h-[800px] overflow-hidden overflow-y-auto ">
       {recentPost.map((post) => (
         <div
           key={post._id}

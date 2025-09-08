@@ -8,12 +8,12 @@ export default function NewsCategory() {
     const [category, setCategory] = React.useState([])
 
     React.useEffect(() => {
-     let res= getSpecificCategoryPosts("animie").then((data)=>setCategory(data)).catch((err)=>console.log(err));
+     let res= getSpecificCategoryPosts("anime").then((data)=>setCategory(data)).catch((err)=>console.log(err));
     }, []);
 
     
   return  <>
-<div className='flex justify-start items-start flex-wrap gap-10 '>
+<div className='flex justify-center items-center md:flex-row md:justify-start md:items-start flex-wrap gap-10 '>
     
         {
             category.map((post)=>(

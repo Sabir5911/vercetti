@@ -1,6 +1,6 @@
 import { client } from "../lib/sanity.client";
 
- export  const fetchAllpost = `*[_type == "post"] | order(_createdAt desc) {
+export const fetchAllpost = `*[_type == "post"] | order(_createdAt desc) {
   _id,
   title,
   description,
@@ -36,9 +36,8 @@ import { client } from "../lib/sanity.client";
   }
 }`;
 
-
 export async function getAllPosts() {
-    return await client.fetch(fetchAllpost);
+  return await client.fetch(fetchAllpost);
 }
 
 export async function getPostBySlug(slug: string) {
@@ -58,13 +57,16 @@ export async function getPostBySlug(slug: string) {
     },
     alt
   },
-    innercoverImage {
-    src {
-      asset->{
-        url
-      }
+    innercoverImage[]{
+    ...,
+    _type == "image" => {
+      ...,
+      "url": asset->url,
+      asset->
     },
-    alt
+    _type == "object" => {
+      ... // YouTube video object
+    }
   },
 
   content[]{
@@ -81,8 +83,6 @@ export async function getPostBySlug(slug: string) {
     { slug }
   );
 }
-
-
 
 export async function getRecentPosts(limit: number = 3) {
   return await client.fetch(
@@ -118,50 +118,6 @@ export async function getRecentPosts(limit: number = 3) {
         url,
         metadata { dimensions }
       } 
-    }
-  }
-    }`,
-    { limit }
-  );
-}
-
-
-export async function getFeaturedPosts(limit: number = 4) {
-  return await client.fetch(
-    `*[_type == "post" && featured == true] | order(_createdAt desc)[0...$limit]{
-      _id,
-  title,
-  description,
-  slug,
-  _createdAt,
-  category,
-    coverImage {
-    src {
-      asset->{
-        url
-      }
-    },  
-    alt
-  },
-    innercoverImage {
-    src {
-      asset->{
-        url
-      }
-    },
-    alt
-  },
-  content[]{
-    ...,
-    _type == "image" => {
-      ...,
-
-      asset->{
-        url,
-        metadata { dimensions }
-
-
-    }      }
     }
   }
     }`,
@@ -212,17 +168,33 @@ export async function getSpecificCategoryPosts(category: string) {
   );
 }
 
-
-export async function getFeaturePost(limit:number){
-
-   const query = `*[_type == "feature"]{
-    post,
+export async function getFeaturePost(limit: number) {
+  const query = `
+  *[_type == "feature" && !(_id in path("drafts.**"))]{
+  _id,
+  post,
+  "media": coalesce(
     media[]{
-      _type,
-      asset->{
-        url
+      // Image items (with or without asset)
+      _type == "image" => {
+        _type,
+        "url": asset->url,
+        alt
+      },
+
+      // YouTube items — handle BOTH possibilities:
+      // 1) old docs with _type: "youtube"
+      // 2) new docs with generic _type: "object" + videoUrl
+      (_type == "youtube" || (_type == "object" && defined(videoUrl))) => {
+        "_type": "youtube",
+        videoUrl
       }
-    }
-  }`
-  return client.fetch(query,{limit})
+    },
+    []
+  )
+}
+
+  
+  `
+  return client.fetch(query, { limit });
 }
