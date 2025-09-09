@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN components
+import { Inter } from "next/font/google";
+
+// Font for title
+const InterFont = Inter({
+  weight: ["500", "600"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 interface SmallCardProps {
   title: string;
@@ -13,7 +21,7 @@ export default function SmallCard({ title, img, href }: SmallCardProps) {
     <Link href={href} className="no-underline">
       <Card className="hover:shadow-lg transition-shadow flex flex-col">
         {/* Image Section */}
-        <div className="relative w-full h-[220px] md:h-[320px] rounded-t-lg overflow-hidden">
+        <div className="relative w-full h-[220px] md:h-[220px] rounded-t-lg overflow-hidden">
           <Image
             src={img}
             alt={title}
@@ -24,8 +32,8 @@ export default function SmallCard({ title, img, href }: SmallCardProps) {
 
         {/* Content */}
         <CardContent className="p-4">
-          <h3 className="text-gray-900 text-sm font-normal max-w-[280px]">
-            {title.length > 180 ? title.slice(0, 180) + "..." : title}
+          <h3 className={`${InterFont.className} text-gray-900 text-sm font-medium leading-snug max-w-[280px]`}>
+            {title.length > 100 ? title.slice(0, 100) + "..." : title}
           </h3>
         </CardContent>
       </Card>

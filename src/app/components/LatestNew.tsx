@@ -2,6 +2,7 @@
 import React from "react"
 import useRecentPost from "../hooks/useRecentPost"
 import SideItem from "./SideItem"
+import { Roboto } from "next/font/google";
 
 function getRelativeTime(dateString: string): string {
   const postDate = new Date(dateString)
@@ -19,16 +20,18 @@ function getRelativeTime(dateString: string): string {
   })
 }
 
+
+
 export default function LatestNew() {
   const { recentPost } = useRecentPost()
 
   return (
-    <div className="flex flex-col gap-4  h-[800px] overflow-hidden overflow-y-auto ">
+    <div className="flex flex-col gap-4  h-[500px] overflow-hidden overflow-y-auto ">
       {recentPost.map((post) => (
         <div
           key={post._id}
           className="bg-gray-50 border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow"
-        >
+ >
           <SideItem
             time={getRelativeTime(post._createdAt)}
             title={post?.title}

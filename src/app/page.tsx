@@ -1,11 +1,19 @@
 import HeroCard from "./components/HeroCard";
 import LatestNew from "./components/LatestNew";
 import NewsCategory from "./components/NewsCategory";
-import { Khand } from "next/font/google";
-import Head from "next/head"; // ✅ import Head
+import { Khand, Inter } from "next/font/google";
+import Head from "next/head";
 
+// Heading font
 const khand = Khand({
   weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Body font
+const inter = Inter({
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -14,70 +22,72 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Solo Spoiler - Latest & Trending Stories</title>
+        <title>Solo Spoiler: Latest News, Trending Stories & Spoilers</title>
         <meta
           name="description"
-          content="Stay updated with Solo Spoiler. Get the latest updates, trending stories, and top categories from around the world."
+          content="Stay updated with Solo Spoiler. Get the latest news, trending stories, and top spoilers from around the world."
         />
       </Head>
 
-      <main className="bg-white min-h-screen text-black">
-        <div className="mx-auto px-4 py-8">
+      <main className="bg-white min-h-screen text-black font-sans">
+        
+        <div className="mx-auto px-4 py-8 ">
           {/* Top Section */}
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="flex flex-col lg:flex-row justify-between gap-x-16 ">
             {/* Left: Hero */}
-            <div className="lg:col-span-2">
+            <div className=""> 
               <h1
-                className={`${khand.className} text-3xl md:text-6xl font-semibold`}
+                className={`${khand.className} text-3xl md:text-5xl font-bold mb-6`}
               >
-                Solo Spoiler – Latest Headlines & Top Stories
+                Spot Light: Latest News & Trending Stories
               </h1>
-
-              {/* ✅ SEO Intro Paragraph */}
-              <p className="mt-4 text-gray-700 leading-relaxed">
-                Welcome to <strong>Solo Spoiler</strong>, your trusted source
-                for <strong>breaking news, trending stories, world updates,
-                politics, entertainment, technology</strong>, and more. Stay
-                informed with real-time headlines and in-depth coverage designed
-                to keep you ahead of the curve.
-              </p>
 
               <HeroCard />
             </div>
 
-            {/* Right: Latest */}
-            <div className="bg-white rounded-lg space-y-4">
+            {/* Right: Latest Stories */}
+            <div className="  rounded-lg space-y-4  ">
               <h2
-                className={`${khand.className} text-xl md:text-2xl font-semibold`}
+                className={`${khand.className} text-xl md:text-2xl font-semibold mb-4`}
               >
-                Latest Headlines and Stories
+                Latest Stories
               </h2>
 
-              <LatestNew />
+              <div className={`${inter.className}`}>
+                <LatestNew />
+              </div>
             </div>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           {/* Bottom Grid */}
           <div className="mt-20">
             <h2
-              className={`${khand.className} text-3xl md:text-6xl font-semibold`}
+              className={`${khand.className} text-3xl md:text-4xl font-bold mb-10`}
             >
               Trending News & Top Stories
             </h2>
 
-            {/* ✅ Category Description */}
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              Explore breaking stories across <strong>world news, business,
-              sports, health, and lifestyle</strong>. From global events to
-              local updates, <strong>Solo Spoiler</strong> brings you
-              comprehensive coverage of what matters most right now.
-            </p>
+            <div className={`${inter.className}`}>
+              <NewsCategory />
+            </div>
 
-            <NewsCategory />
+
+
+
           </div>
-
-          {/* ✅ Footer SEO Section */}
-     
         </div>
       </main>
     </>

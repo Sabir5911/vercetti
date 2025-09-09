@@ -13,13 +13,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import { getFeaturePost } from "../queries"
 import useBlog from "../hooks/useBlog"
+import { useEffect, useRef } from "react"
 
 type MediaItem =
   | {
       _type: "image";
-      asset: {
-        url: string;
-      };
+       url: string;
+     
       alt?: string;
     }
   | {
@@ -67,28 +67,46 @@ function MediaSlide({ p, title,current }: { p: Post; title: string ,current:numb
 
   if (isImage) {
     return (
-      <Image
-        src={p.media![0].asset.url}
+     <div>
+       <Image
+        src={p.media![0].url}
         alt={p.post || `Hero Image`}
               className="w-full h-full object-cover"
               width={400}
               height={599}
         priority
       />
+      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
+        <h2 className="text-white text-xl md:text-2xl font-bold">{title}</h2>
+      </div>
+     </div>
     )
   }
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
 
   const videoId = getYouTubeId(p.media![0]?.videoUrl);
+
+
+  useEffect(() => {
+    if (iframeRef.current && !isVideo) {
+      iframeRef.current.removeAttribute("allow");
+    }else if (iframeRef.current && isVideo) {
+      iframeRef.current.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autoplay");
+    }
+  }, []);
 
 
 if (isVideo) {
   return (
     <div className="relative w-full h-[66vw] md:h-full md:h-full" >
       <iframe
+
+      ref={iframeRef}
       
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`}
-        className="w-full h-full object-cover"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autoplay"
+        className="w-full h-full object-cover remove"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; autoplay "
         allowFullScreen
       />
     </div>
@@ -138,17 +156,17 @@ const HeroCard = () => {
     }
   }, [api])
 
-  console.log(current)
+  console.log(posts)
   return (
-    <div className="mx-auto max-w-full mt-10">
-      <Carousel setApi={setApi} className="w-full max-w-full">
+    <div className="mx-auto  mt-10  md:w-[1000px] md:h-[490px]">
+      <Carousel setApi={setApi} className="">
         <CarouselContent>
           {posts.map((p, index) => {
             const matchedBlog = blogs.find((b) => b.slug.current === p.post)
             return (
               <CarouselItem key={index}>
-                <Card className="relative">
-                  <CardContent className="relative md:w-full md:h-[590px] p-0 overflow-hidden rounded-lg">
+                <Card className="">
+                  <CardContent className="relative md:w-[1000px] md:h-[490px] p-0 overflow-hidden rounded-lg">
                     <MediaSlide p={p} title={matchedBlog?.title || "Default Hero Title"} current={current} />
                   </CardContent>
                 </Card>
@@ -156,8 +174,12 @@ const HeroCard = () => {
             )
           })}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex" />
-        <CarouselNext className="hidden md:flex" />
+          
+      <CarouselPrevious className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/70 hover:bg-white text-black rounded-full p-2 shadow-lg z-10"/>
+      <CarouselNext className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/70 hover:bg-white text-black rounded-full p-2 shadow-lg z-10"/>
+
+
+
       </Carousel>
     </div>
   )

@@ -42,6 +42,26 @@ const nextConfig: NextConfig = {
     ], 
     
   },
+   async redirects() {
+    return [
+      {
+        source: '/jujutsu-kaisen-gege-akutami-kills-off-two-major-jjk-characters-in-the-sequel',   // old URL that Google indexed
+        destination: '/jujutsu-kaisen-gege-akutami-kills-two-major-jjk', // new URL
+        permanent: true,             // 301 redirect
+      },
+      {
+        source: '/gege-akutami-announces-mimojuro-new-jujutsu-kaisen-spin-off-launching-september-2025',
+        destination: '/gege-akutami-reveals-mimojuro-jjk-spinoff-sept',
+        permanent: true,
+      },
+      {
+        source: '/gege-akutami-announces-mimojuro-new-jujutsu-kaisen-spin-off-launching-september-2025',
+        destination: '/gege-akutami-reveals-mimojuro-jjk-spinoff-sept',
+        permanent: true,
+      },
+     
+    ]
+  },
  
 };
 
